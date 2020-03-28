@@ -1,0 +1,36 @@
+<div>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Event Name</th>
+        <th scope="col">Start</th>
+        <th scope="col">Finish</th>
+        <th scope="col">Web Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td><%= event.title %></td>
+          <td><%= format_date(event.start) %></td>
+          <td><%= format_date(event.finish) %></td>
+          <td><%= link_to(event.web_source.name, event.web_source.url) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <% if @events.present? %>
+      <tr>
+        <td colspan="4">
+          <%= will_paginate @events %>
+        </td>
+      </tr>
+    <% end %>
+    <% if @events.blank? %>
+      <tr>
+        <td colspan="4">
+          No events present
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
