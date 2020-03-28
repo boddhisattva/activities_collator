@@ -9,8 +9,8 @@ class BerghainScraper < BaseScraper
 
   def extract_dates(event)
     if dates_exist?(event)
-      start_date = DateTime.parse(event.css('p').first.text)
-      end_date = DateTime.parse(event.css('p').first.text)
+      start_date = event.css('p').first.text.to_date
+      end_date = event.css('p').first.text.to_date
     end
 
     [start_date, end_date]

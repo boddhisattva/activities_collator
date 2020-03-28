@@ -1,15 +1,20 @@
 # frozen_string_literal: true
 
+require 'uri'
+
 namespace :scraper do
   desc 'Scrape events data from different websources'
   task scrape: :environment do
     web_sources.each do |web_source|
-      websource = WebSource.find_or_create_by!({ name: web_source[:name], url: web_source[:url], scraper: web_source[:scraper] })
+      uri = URI.parse(web_source[:events_url])
+      web_source_base_url = "#{uri.scheme}://#{uri.host}"
+
+      websource = WebSource.find_or_create_by!({ name: web_source[:name], url: web_source_base_url, scraper: web_source[:scraper] })
 
       Rails.logger.info "\n*********\nScraping: #{websource.url}\n************\n"
 
       web_source_scraper = Object.const_get(websource.scraper).new(websource)
-      items_scraped_count, errors = web_source_scraper.scrape
+      items_scraped_count, errors = web_source_scraper.scrape(web_source[:events_url])
       display_scraped_results(websource, items_scraped_count, errors)
     rescue StandardError => e
       Rails.logger.info "\n*********\nCould not find an existing Web Source or create a new Web Source\n*********\n"
@@ -19,8 +24,8 @@ namespace :scraper do
 end
 
 def web_sources
-  [{ name: 'C/O Berlin', url: 'https://www.co-berlin.org/en/calender', scraper: 'CoBerlinScraper' },
-   { name: 'Berghain', url: 'http://berghain.de/events/', scraper: 'BerghainScraper' }]
+  [{ name: 'C/O Berlin', events_url: 'https://www.co-berlin.org/en/calender', scraper: 'CoBerlinScraper' },
+   { name: 'Berghain', events_url: 'http://berghain.de/events/', scraper: 'BerghainScraper' }]
 end
 
 def display_scraped_results(web_source, items_scraped_count, errors)

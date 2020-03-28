@@ -16,7 +16,7 @@ class CoBerlinScraper < BaseScraper
       end_date   = event.css('.date-display-single')[0]['content']
     end
 
-    [start_date, end_date]
+    [start_date.to_date, end_date.to_date]
   end
 
   def date_range?(event)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WebSource < ApplicationRecord
   has_many :events, dependent: :destroy
 
