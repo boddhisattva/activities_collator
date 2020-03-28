@@ -14,8 +14,8 @@ class BaseScraper
     @items_scraped_count = Hash.new(0)
   end
 
-  def scrape
-    webpage_document = parse_html_document
+  def scrape(url)
+    webpage_document = parse_html_document(url)
 
     events(webpage_document).each do |event|
       create_event(event)
@@ -55,8 +55,8 @@ class BaseScraper
     raise NotImplementedError, 'This needs to be implemented in a subclass of BaseScraper'
   end
 
-  def parse_html_document
-    Nokogiri::HTML(open(web_source.url))
+  def parse_html_document(url)
+    Nokogiri::HTML(open(url))
   end
 
   def title(_event)

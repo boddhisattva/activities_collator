@@ -1,5 +1,36 @@
 <div>
   <table class="table table-bordered">
+    <div class="filters">
+      <form action="/">
+        <div class="control-group">
+          <div class="row">
+            <div class="col-md-4">
+              <label class="control-label col-md-4">Event Name</label>
+              <input type="text" class="form-control d-inline-block col-md-7" name="events[title]" value="<%= @title %>">
+            </div>
+            <div class="col-md-4">
+              <label class="control-label col-md-4">Start date</label>
+              <input name="events[start]" type="text" class="form-control d-inline-block col-md-6"
+                data-provide='datepicker' data-date-autoclose="true" data-date-clear-btn="true" >
+            </div>
+            <div class="col-md-4">
+              <label class="control-label col-md-4">Finish date</label>
+              <input name="events[finish]" type="text" class="form-control d-inline-block col-md-6"
+                data-provide='datepicker' data-date-autoclose="true" data-date-clear-btn="true" >
+            </div>
+            <div class="col-md-4">
+              <label class="control-label col-md-4">Web Source</label>
+              <%= select_tag 'events[web_source_id]', options_from_collection_for_select(@web_sources, 'id', 'name'), class: 'form-control d-inline-block col-md-6', include_blank: true %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
     <thead class="thead-light">
       <tr>
         <th scope="col">Event Name</th>
@@ -11,16 +42,16 @@
     <tbody>
       <% @events.each do |event| %>
         <tr>
-          <td><%= event.title %></td>
+          <td><%= link_to(event.title, event.url) %></td>
           <td><%= format_date(event.start) %></td>
           <td><%= format_date(event.finish) %></td>
-          <td><%= link_to(event.web_source.name, event.web_source.url) %></td>
+          <td><%= link_to(event.web_source_name, event.web_source_url) %></td>
         </tr>
       <% end %>
     </tbody>
     <% if @events.present? %>
       <tr>
-        <td colspan="4">
+        <td colspan="4" >
           <%= will_paginate @events %>
         </td>
       </tr>
