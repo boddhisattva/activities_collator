@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class BerghainScraper < BaseScraper
+  EVENT_URL = 'http://berghain.de/events/'
+
   private
 
   def events(webpage_document)

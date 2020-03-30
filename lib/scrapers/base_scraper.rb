@@ -14,8 +14,10 @@ class BaseScraper
     @items_scraped_count = Hash.new(0)
   end
 
-  def scrape(url)
-    webpage_document = parse_html_document(url)
+  def scrape
+    raise NotImplementedError, 'An event URL needs to be present in a subclass', unless const_defined?(self.class::EVENT_URL)
+
+    webpage_document = parse_html_document(self.class::EVENT_URL)
 
     events(webpage_document).each do |event|
       create_event(event)
