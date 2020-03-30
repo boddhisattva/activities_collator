@@ -15,7 +15,7 @@ class BaseScraper
   end
 
   def scrape
-    raise NotImplementedError, 'An event URL needs to be present in a subclass', unless const_defined?(self.class::EVENT_URL)
+    raise NotImplementedError, 'An event URL needs to be present in a subclass' unless const_defined?(self.class::EVENT_URL)
 
     webpage_document = parse_html_document(self.class::EVENT_URL)
 
