@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-4">
               <label class="control-label col-md-4">Web Source</label>
-              <%= select_tag 'events[web_source_id]', options_from_collection_for_select(@web_sources, 'id', 'name'), class: 'form-control d-inline-block col-md-6', include_blank: true %>
+              <%= select_tag 'events[web_source_id]', options_from_collection_for_select(@web_sources, 'id', 'name', selected: params[:events] && params[:events][:web_source_id]), prompt: 'Please choose websource', class: 'form-control d-inline-block col-md-6'%>
             </div>
           </div>
           <div class="row">
