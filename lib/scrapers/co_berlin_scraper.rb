@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CoBerlinScraper < BaseScraper
+  EVENT_URL = 'https://www.co-berlin.org/en/calender'
+
   private
 
   def events(webpage_document)

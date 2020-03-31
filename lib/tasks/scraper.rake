@@ -14,8 +14,8 @@ namespace :scraper do
       Rails.logger.info "\n*********\nScraping: #{websource.url}\n************\n"
 
       web_source_scraper = Object.const_get(websource.scraper).new(websource)
-      items_scraped_count, errors = web_source_scraper.scrape(web_source[:events_url])
-      display_scraped_results(websource, items_scraped_count, errors)
+      errors = web_source_scraper.scrape
+      display_scraped_results(web_source, errors)
     rescue StandardError => e
       Rails.logger.info "\n*********\nCould not find an existing Web Source or create a new Web Source\n*********\n"
       Rails.logger.info "\n*********\nError details: #{e.message}\n*********\n"
@@ -28,32 +28,23 @@ def web_sources
    { name: 'Berghain', events_url: 'http://berghain.de/events/', scraper: 'BerghainScraper' }]
 end
 
-def display_scraped_results(web_source, items_scraped_count, errors)
-  display_items_scraped_related_info(web_source, items_scraped_count)
+def display_scraped_results(web_source, errors)
   display_errors_related_info(web_source, errors) if errors.present?
-  display_scraped_results_summary(web_source, items_scraped_count, errors)
-end
-
-def display_items_scraped_related_info(web_source, items_scraped_count)
-  items_scraped_count.each do |item_type, items_count|
-    Rails.logger.info "\n*********\nNumber of Items of type '#{item_type}' scraped for #{web_source.url}: #{items_count}\n*********\n"
-  end
+  display_scraped_results_summary(web_source, errors)
 end
 
 def display_errors_related_info(web_source, errors)
-  Rails.logger.info "\n*********\nErrors when scraping websource: #{web_source.url}\n*********\n"
+  Rails.logger.info "\n*********\nErrors when scraping websource: #{web_source[:events_url]}\n*********\n"
   errors.each do |error|
-    Rails.logger.info "\n*********\nError originating from Websource: #{error[:websource]} for activity type '#{error[:type]}'\n"
+    Rails.logger.info "\n*********\nError originating from Websource: #{error[:websource]}"
     Rails.logger.info "Error details: #{error[:message]}\n*********\n"
   end
 end
 
-def display_scraped_results_summary(web_source, items_scraped_count, errors)
-  total_items_scraped = items_scraped_count.values.sum
+def display_scraped_results_summary(web_source, errors)
   errors_count = errors.count
-  puts "\n*********\nScraped results summary for websource: #{web_source.url} \n"
-  puts "\nTotal number of items scraped: #{total_items_scraped}\n"
+  puts "\n*********\nScraped results summary for websource: #{web_source[:events_url]} \n"
   puts "\nTotal number of errors: #{errors_count}\n*********\n"
-  Rails.logger.info "\nScraped results summary: \n*********\nTotal number of items scraped for #{web_source.url}: #{total_items_scraped}, " \
+  Rails.logger.info "\nScraped results summary for websource url: #{web_source[:events_url]}, " \
                     "Errors count: #{errors_count}\n*********\n"
 end
