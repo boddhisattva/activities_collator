@@ -33,7 +33,7 @@ class CoBerlinScraper < BaseScraper
     event.css('.article-text').text
   end
 
-  def url(event)
-    "#{web_source.url}#{event.css('a').first.attributes['href'].value}"
+  def url(base_url, event)
+    "#{base_url}#{event.css('a').first.attributes['href'].value}"
   end
 end
