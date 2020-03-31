@@ -15,7 +15,7 @@ namespace :scraper do
 
       web_source_scraper = Object.const_get(websource.scraper).new(websource)
       errors = web_source_scraper.scrape
-      display_scraped_results(websource, errors)
+      display_scraped_results(web_source, errors)
     rescue StandardError => e
       Rails.logger.info "\n*********\nCould not find an existing Web Source or create a new Web Source\n*********\n"
       Rails.logger.info "\n*********\nError details: #{e.message}\n*********\n"
@@ -34,7 +34,7 @@ def display_scraped_results(web_source, errors)
 end
 
 def display_errors_related_info(web_source, errors)
-  Rails.logger.info "\n*********\nErrors when scraping websource: #{web_source.url}\n*********\n"
+  Rails.logger.info "\n*********\nErrors when scraping websource: #{web_source[:events_url]}\n*********\n"
   errors.each do |error|
     Rails.logger.info "\n*********\nError originating from Websource: #{error[:websource]}"
     Rails.logger.info "Error details: #{error[:message]}\n*********\n"
@@ -43,8 +43,8 @@ end
 
 def display_scraped_results_summary(web_source, errors)
   errors_count = errors.count
-  puts "\n*********\nScraped results summary for websource: #{web_source.url} \n"
+  puts "\n*********\nScraped results summary for websource: #{web_source[:events_url]} \n"
   puts "\nTotal number of errors: #{errors_count}\n*********\n"
-  Rails.logger.info "\nScraped results summary for websource url: #{web_source.url}, " \
+  Rails.logger.info "\nScraped results summary for websource url: #{web_source[:events_url]}, " \
                     "Errors count: #{errors_count}\n*********\n"
 end

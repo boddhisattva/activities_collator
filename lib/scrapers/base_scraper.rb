@@ -43,7 +43,7 @@ class BaseScraper
     )
   rescue StandardError => e
     errors << {
-      websource: web_source.url,
+      websource: self.class::EVENT_URL,
       message: "Error in creating event. Details - #{e.message}"
     }
   end
