@@ -1,5 +1,9 @@
 <div>
   <table class="table table-bordered">
+    <% if @date_validator&.errors&.any? %>
+      <%= render 'error_messages', obj: @date_validator %>
+    <% end %>
+    <div id="error_message" ></div>
     <div class="filters">
       <form action="/">
         <div class="control-group">

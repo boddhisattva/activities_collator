@@ -1,0 +1,12 @@
+// Place all the styles related to the Events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#error_explanation {
+  color: $red;
+
+  ul {
+    color: $red;
+    margin: 0 0 30px;
+  }
+}
