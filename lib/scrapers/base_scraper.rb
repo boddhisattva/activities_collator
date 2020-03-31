@@ -4,10 +4,6 @@ require 'nokogiri'
 require 'open-uri'
 
 class BaseScraper
-  ACTIVITY_TYPE = {
-    events: 'event'
-  }.freeze
-
   def initialize(web_source)
     @web_source = web_source
     @errors = []
@@ -47,7 +43,7 @@ class BaseScraper
     )
   rescue StandardError => e
     errors << {
-      websource: web_source.url, type: ACTIVITY_TYPE[:events],
+      websource: web_source.url,
       message: "Error in creating event. Details - #{e.message}"
     }
   end

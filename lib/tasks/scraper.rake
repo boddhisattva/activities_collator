@@ -36,7 +36,7 @@ end
 def display_errors_related_info(web_source, errors)
   Rails.logger.info "\n*********\nErrors when scraping websource: #{web_source.url}\n*********\n"
   errors.each do |error|
-    Rails.logger.info "\n*********\nError originating from Websource: #{error[:websource]} for activity type '#{error[:type]}'\n"
+    Rails.logger.info "\n*********\nError originating from Websource: #{error[:websource]}"
     Rails.logger.info "Error details: #{error[:message]}\n*********\n"
   end
 end
