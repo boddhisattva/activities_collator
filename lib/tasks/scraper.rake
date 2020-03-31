@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'uri'
-
 namespace :scraper do
   desc 'Scrape events data from different websources'
   task scrape: :environment do
