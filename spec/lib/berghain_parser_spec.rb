@@ -8,11 +8,11 @@ describe BerghainScraper do
       let(:web_source) { WebSource.create(name: 'test', url: 'http://berghain.com/events', scraper: 'BerghainScraper') }
 
       it 'scrapes events information and creates new events' do
-        scraper = BerghainScraper.new(web_source)
+        scraper = BerghainScraper.new
 
         allow(scraper).to receive(:parse_html_document) { Nokogiri::HTML(event_with_dates_content) }
 
-        expect { scraper.scrape }.to change(Event, :count).by(1)
+        expect { scraper.scrape(web_source) }.to change(Event, :count).by(1)
       end
     end
   end

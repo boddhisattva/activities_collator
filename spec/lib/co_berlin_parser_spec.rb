@@ -9,13 +9,13 @@ describe CoBerlinScraper do
     context 'Co Berlin page has unique events on its page' do
       context 'events have start and end dates' do
         it 'scrapes events information and creates new events' do
-          scraper = CoBerlinScraper.new(web_source)
+          scraper = CoBerlinScraper.new
 
           allow(scraper).to receive(:parse_html_document) do
             Nokogiri::HTML(CoBerlinHtmlHelper.events_with_start_and_end_date_content)
           end
 
-          expect { scraper.scrape }.to change(Event, :count).by(2)
+          expect { scraper.scrape(web_source) }.to change(Event, :count).by(2)
         end
 
         context 'duplicate event information is present on page' do
@@ -26,13 +26,13 @@ describe CoBerlinScraper do
 
       context 'event only has start dates' do
         it 'scrapes events information and creates new events' do
-          scraper = CoBerlinScraper.new(web_source)
+          scraper = CoBerlinScraper.new
 
           allow(scraper).to receive(:parse_html_document) do
             Nokogiri::HTML(CoBerlinHtmlHelper.event_with_start_date_content)
           end
 
-          expect { scraper.scrape }.to change(Event, :count).by(1)
+          expect { scraper.scrape(web_source) }.to change(Event, :count).by(1)
         end
       end
     end

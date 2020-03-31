@@ -8,10 +8,10 @@ class EventsController < ApplicationController
     @events = if event_params.present? && dates_are_valid?
                 Event.joins(:web_source)
                      .select('title, events.url, start, finish, web_source_id, web_sources.name AS web_source_name, web_sources.url AS web_source_url')
-                     .search_by(event_params)
+                     .search_by(event_params).order('events.created_at DESC')
               else
                 Event.joins(:web_source)
-                     .select('title, events.url, start, finish, web_source_id, web_sources.name AS web_source_name, web_sources.url AS web_source_url')
+                     .select('title, events.url, start, finish, web_source_id, web_sources.name AS web_source_name, web_sources.url AS web_source_url').order('events.created_at DESC')
               end.paginate(page: params[:page] || DEFAULT_PAGE_NUMBER, per_page: ITEMS_PER_PAGE)
 
     @web_sources = WebSource.all.select('id, name')

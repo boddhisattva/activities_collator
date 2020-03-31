@@ -30,7 +30,7 @@ class BerghainScraper < BaseScraper
     event.css('h3').text + '\n' + event.css('h4').text
   end
 
-  def url(event)
-    "#{web_source.url}#{event.attributes['href'].value}"
+  def url(base_url, event)
+    "#{base_url}#{event.attributes['href'].value}"
   end
 end
