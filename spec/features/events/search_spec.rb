@@ -12,6 +12,11 @@ RSpec.feature 'Events search', type: :feature do
       click_button 'Search'
 
       expect(page).to have_text('Random event title')
+      expect(page).to have_selector(:css, 'a[href="http://onedayatatime.com/events1"]')
+      expect(page).to have_selector(:css, 'a[href="http://onedayatatime.com/events2"]')
+      expect(page).to have_selector(:css, 'a[href="http://onedayatatime.com/events3"]')
+      expect(page).to have_selector(:css, 'a[href="http://onedayatatime.com/events4"]')
+      expect(page).to have_selector(:css, 'a[href="http://onedayatatime.com/events5"]')
     end
 
     context 'user searches for events with specific search filter criteria' do
