@@ -11,7 +11,7 @@ class Event < ApplicationRecord
   scope :filter_by_finish, ->(finish) { where('finish <= ?', finish) }
   scope :filter_by_web_source_id, ->(web_source_id) { where(web_source_id: web_source_id) }
 
-  def search_by(filtering_params)
+  def self.search_by(filtering_params)
     results = where(nil)
     filtering_params.each do |key, value|
       results = results.public_send("filter_by_#{key}", value) if value.present?
