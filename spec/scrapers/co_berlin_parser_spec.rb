@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe CoBerlinScraper do
+describe CoBerlinParser do
   describe '#scrape' do
     let!(:web_source) { create(:web_source, url: 'http://coberlin.com/events', scraper: 'CoBerlinScraper') }
-    let(:scraper) { CoBerlinScraper.new }
+    let(:scraper) { CoBerlinParser.new }
 
     context 'Co Berlin page has unique events on its page' do
       context 'events have start and end dates' do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CoBerlinScraper < BaseScraper
+class CoBerlinParser < BaseScraper
   EVENT_URL = 'https://www.co-berlin.org/en/calender'
 
   private

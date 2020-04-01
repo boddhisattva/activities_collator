@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BerghainScraper < BaseScraper
+class BerghainParser < BaseScraper
   EVENT_URL = 'http://berghain.de/events/'
 
   private

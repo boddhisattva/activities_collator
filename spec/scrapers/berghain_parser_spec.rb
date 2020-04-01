@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-describe BerghainScraper do
+describe BerghainParser do
   describe '#scrape' do
     context 'Berghain page has events with relevant dates' do
       let(:web_source) { create(:web_source, url: 'http://berghain.com/events', scraper: 'BerghainScraper') }
 
       it 'scrapes events information and creates new events' do
-        scraper = BerghainScraper.new
+        scraper = BerghainParser.new
 
         allow(scraper).to receive(:parse_html_document) { Nokogiri::HTML(BerghainHtmlHelper.event_with_dates_content) }
 

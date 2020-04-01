@@ -7,7 +7,9 @@ namespace :scraper do
       uri = URI.parse(web_source[:events_url])
       web_source_base_url = "#{uri.scheme}://#{uri.host}"
 
-      websource = WebSource.find_or_create_by!({ name: web_source[:name], url: web_source_base_url, scraper: web_source[:scraper] })
+      binding.pry
+
+      websource = WebSource.find_or_create_by!({ name: web_source[:name], url: web_source_base_url, scraper: web_source[:parser] })
 
       Rails.logger.info "\n*********\nScraping: #{websource.url}\n************\n"
 
@@ -22,8 +24,8 @@ namespace :scraper do
 end
 
 def web_sources
-  [{ name: 'C/O Berlin', events_url: 'https://www.co-berlin.org/en/calender', scraper: 'CoBerlinScraper' },
-   { name: 'Berghain', events_url: 'http://berghain.de/events/', scraper: 'BerghainScraper' }]
+  [{ name: 'C/O Berlin', events_url: 'https://www.co-berlin.org/en/calender', parser: 'CoBerlinParser' },
+   { name: 'Berghain', events_url: 'http://berghain.de/events/', parser: 'BerghainParser' }]
 end
 
 def display_scraped_results(web_source, errors)

@@ -33,7 +33,7 @@ describe BaseScraper do
 
     context 'page contains duplicate event entries' do
       it 'creates unique event entries in the database & discards duplicate ones' do
-        scraper = CoBerlinScraper.new
+        scraper = CoBerlinParser.new
         allow(scraper).to receive(:parse_html_document) do
           Nokogiri::HTML(CoBerlinHtmlHelper.duplicate_events)
         end
@@ -42,7 +42,7 @@ describe BaseScraper do
       end
 
       it 'captures errors when trying to create duplicate events' do
-        scraper = BerghainScraper.new
+        scraper = BerghainParser.new
         allow(scraper).to receive(:parse_html_document) do
           Nokogiri::HTML(BerghainHtmlHelper.duplicate_events)
         end
