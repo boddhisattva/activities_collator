@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :event do
-    sequence(:id, &:to_s)
     title { 'Random event title' }
     sequence :url do |n|
       "http://onedayatatime.com/events#{n}"
