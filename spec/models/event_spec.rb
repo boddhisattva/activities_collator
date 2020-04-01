@@ -8,12 +8,8 @@ RSpec.describe Event, type: :model do
   end
 
   describe 'validations' do
-    let(:web_source_id) { WebSource.create(name: 'believe', url: 'http://believe.com', scraper: 'RandomScraper').id }
-
-    subject do
-      Event.new(title: 'Here is the content', start: Time.zone.now.to_datetime, url: 'http://believe.com/event/23',
-                finish: Time.zone.now.to_datetime + 1.day, web_source_id: web_source_id)
-    end
+    let(:web_source) { create(:web_source) }
+    subject(:event) { build(:event, web_source: web_source) }
 
     it { should validate_uniqueness_of(:url) }
     it { should validate_presence_of(:url) }

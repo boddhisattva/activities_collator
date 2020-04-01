@@ -8,7 +8,7 @@ RSpec.describe WebSource, type: :model do
   end
 
   describe 'validations' do
-    subject { WebSource.new(name: 'test', url: 'http://test.com', scraper: 'RandomScraper') }
+    subject { build(:web_source) }
 
     it { should validate_uniqueness_of(:url) }
     it { should validate_presence_of(:url) }
