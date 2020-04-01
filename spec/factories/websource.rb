@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :web_source do
-    sequence(:id, &:to_s)
     sequence(:url) { |n| "http://onedayatatime#{n}" }
     name { 'A random name' }
     scraper { 'OneDayAtATimeScraper' }

@@ -26,7 +26,7 @@ RSpec.feature 'Events search', type: :feature do
 
         visit root_path
 
-        within('.filters') do
+        within('.search_filters') do
           fill_in 'events[start]', with: 1.week.from_now.strftime('%m/%d/%Y')
           fill_in 'events[finish]', with: 1.month.from_now.strftime('%m/%d/%Y')
         end
@@ -42,7 +42,7 @@ RSpec.feature 'Events search', type: :feature do
 
         visit root_path
 
-        within('.filters') do
+        within('.search_filters') do
           fill_in 'events[start]', with: 1.month.from_now.strftime('%m/%d/%Y')
           fill_in 'events[finish]', with: 2.weeks.from_now.strftime('%m/%d/%Y')
         end
@@ -61,7 +61,7 @@ RSpec.feature 'Events search', type: :feature do
 
         visit root_path
 
-        within('.filters') do
+        within('.search_filters') do
           fill_in 'events[title]', with: ' near   future '
           fill_in 'events[start]', with: 1.week.from_now.strftime('%m/%d/%Y')
           fill_in 'events[finish]', with: 2.months.from_now.strftime('%m/%d/%Y')
