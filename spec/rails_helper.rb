@@ -5,10 +5,6 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 
-Dir.glob(File.join(Rails.root, 'lib', 'scrapers', '/*.rb')).sort.each do |file|
-  require file
-end
-
 Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |file| require file }
 
 # Prevent database truncation if the environment is production
