@@ -2,12 +2,12 @@
 
 FactoryBot.define do
   factory :event do
-    title { 'Random event title' }
+    sequence(:title) { |n| "Random event title #{n}" }
     sequence :url do |n|
       "http://onedayatatime.com/events#{n}"
     end
-    start { DateTime.now }
-    finish { DateTime.now + 7.days }
+    start { Time.zone.now }
+    finish { Time.zone.now + 7.days }
     web_source
   end
 end
