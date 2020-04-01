@@ -62,7 +62,7 @@ RSpec.feature 'Events search', type: :feature do
         visit root_path
 
         within('.filters') do
-          fill_in 'events[title]', with: 'near future'
+          fill_in 'events[title]', with: ' near   future '
           fill_in 'events[start]', with: 1.week.from_now.strftime('%m/%d/%Y')
           fill_in 'events[finish]', with: 2.months.from_now.strftime('%m/%d/%Y')
           select('new websource', from: 'events[web_source_id]')
