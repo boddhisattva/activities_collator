@@ -32,28 +32,6 @@ describe CoBerlinScraper do
           expect { scraper.scrape(web_source) }.to change(Event, :count).by(1)
         end
       end
-
-      context 'page contains duplicate event entries' do
-        it 'does not create duplicate events in the database' do
-          allow(scraper).to receive(:parse_html_document) do
-            Nokogiri::HTML(CoBerlinHtmlHelper.duplicate_events)
-          end
-
-          expect { scraper.scrape(web_source) }.to change(Event, :count).by(1)
-        end
-
-        it 'captures errors when trying to create duplicate events' do
-          allow(scraper).to receive(:parse_html_document) do
-            Nokogiri::HTML(CoBerlinHtmlHelper.duplicate_events)
-          end
-
-          errors = scraper.scrape(web_source)
-
-          expect(errors.count).to eq(1)
-          expect(errors.first[:message]).to eq('Error in creating event. Details - Validation failed: Url has already been taken')
-          expect(errors.first[:websource]).to eq('https://www.co-berlin.org/en/calender')
-        end
-      end
     end
   end
 end
