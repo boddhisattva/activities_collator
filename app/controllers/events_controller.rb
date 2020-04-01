@@ -25,6 +25,11 @@ class EventsController < ApplicationController
 
   def dates_are_valid?
     @date_validator = DateValidator.new
+    initialize_start_and_finish_dates
+    @date_validator.valid?
+  end
+
+  def initialize_start_and_finish_dates
     start_date = event_params[:start]
     finish_date = event_params[:finish]
     if start_date.present?
@@ -33,6 +38,5 @@ class EventsController < ApplicationController
     if finish_date.present?
       @date_validator.finish_date = Date.strptime(finish_date, '%m/%d/%Y')
     end
-    @date_validator.valid?
   end
 end
