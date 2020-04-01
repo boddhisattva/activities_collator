@@ -9,28 +9,28 @@ class BerghainScraper < BaseScraper
     webpage_document.css('.upcoming-event')
   end
 
-  def extract_dates(event)
-    if dates_exist?(event)
-      start_date = event.css('p').first.text.to_date
-      end_date = event.css('p').first.text.to_date
+  def extract_dates(event_element)
+    if dates_exist?(event_element)
+      start_date = event_element.css('p').first.text.to_date
+      end_date = event_element.css('p').first.text.to_date
     end
 
     [start_date, end_date]
   end
 
-  def dates_exist?(event)
-    event.css('p').first.text.present?
+  def dates_exist?(event_element)
+    event_element.css('p').first.text.present?
   end
 
-  def title(event)
-    event.css('h2').text.strip
+  def title(event_element)
+    event_element.css('h2').text.strip
   end
 
-  def description(event)
-    event.css('h3').text + '\n' + event.css('h4').text
+  def description(event_element)
+    event_element.css('h3').text + '\n' + event_element.css('h4').text
   end
 
-  def url(base_url, event)
-    "#{base_url}#{event.attributes['href'].value}"
+  def url(base_url, event_element)
+    "#{base_url}#{event_element.attributes['href'].value}"
   end
 end

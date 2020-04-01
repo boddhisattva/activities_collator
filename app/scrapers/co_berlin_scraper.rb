@@ -9,31 +9,31 @@ class CoBerlinScraper < BaseScraper
     webpage_document.css('.seite-c-single')
   end
 
-  def extract_dates(event)
-    if date_range?(event)
-      start_date = event.css('.date-display-start')[0]['content']
-      end_date   = event.css('.date-display-end')[0]['content']
+  def extract_dates(event_element)
+    if date_range?(event_element)
+      start_date = event_element.css('.date-display-start')[0]['content']
+      end_date   = event_element.css('.date-display-end')[0]['content']
     else
-      start_date = event.css('.date-display-single')[0]['content']
-      end_date   = event.css('.date-display-single')[0]['content']
+      start_date = event_element.css('.date-display-single')[0]['content']
+      end_date   = event_element.css('.date-display-single')[0]['content']
     end
 
     [start_date.to_date, end_date.to_date]
   end
 
-  def date_range?(event)
-    !event.css('.date-display-range').empty?
+  def date_range?(event_element)
+    !event_element.css('.date-display-range').empty?
   end
 
-  def title(event)
-    event.css('.article-title').text
+  def title(event_element)
+    event_element.css('.article-title').text
   end
 
-  def description(event)
-    event.css('.article-text').text
+  def description(event_element)
+    event_element.css('.article-text').text
   end
 
-  def url(base_url, event)
-    "#{base_url}#{event.css('a').first.attributes['href'].value}"
+  def url(base_url, event_element)
+    "#{base_url}#{event_element.css('a').first.attributes['href'].value}"
   end
 end
