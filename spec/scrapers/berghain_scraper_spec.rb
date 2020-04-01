@@ -5,7 +5,7 @@ require 'rails_helper'
 describe BerghainScraper do
   describe '#scrape' do
     context 'Berghain page has events with relevant dates' do
-      let(:web_source) { WebSource.create(name: 'test', url: 'http://berghain.com/events', scraper: 'BerghainScraper') }
+      let(:web_source) { create(:web_source, url: 'http://berghain.com/events', scraper: 'BerghainScraper') }
 
       it 'scrapes events information and creates new events' do
         scraper = BerghainScraper.new

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe CoBerlinScraper do
   describe '#scrape' do
-    let!(:web_source) { WebSource.create(name: 'test', url: 'http://coberlin.com/events', scraper: 'CoBerlinScraper') }
+    let!(:web_source) { create(:web_source, url: 'http://coberlin.com/events', scraper: 'CoBerlinScraper') }
     let(:scraper) { CoBerlinScraper.new }
 
     context 'Co Berlin page has unique events on its page' do
