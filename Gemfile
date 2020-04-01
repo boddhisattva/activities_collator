@@ -42,6 +42,8 @@ gem 'jquery-rails'
 
 gem 'will_paginate'
 
+gem 'haml-rails', '~> 2.0', '>= 2.0.1'
+
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'pry-byebug'

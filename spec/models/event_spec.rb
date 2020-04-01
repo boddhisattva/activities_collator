@@ -26,7 +26,7 @@ RSpec.describe Event, type: :model do
     context 'given certain search filter criteria' do
       it 'gets results based on the specified search criteria' do
         web_source = create(:web_source)
-        events = create_list(:event, 5, web_source: web_source)
+        4.times.map { |i| create :event, title: "Random event title #{i}", web_source: web_source }
         filtering_params = { 'title' => '  Random event   title  2  ', 'start' => 1.week.ago.strftime('%m/%d/%Y'),
                              'finish' => 2.weeks.from_now.strftime('%m/%d/%Y'), 'web_source_id' => web_source.id }
 
