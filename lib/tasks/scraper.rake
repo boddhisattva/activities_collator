@@ -7,14 +7,12 @@ namespace :scraper do
       uri = URI.parse(web_source[:events_url])
       web_source_base_url = "#{uri.scheme}://#{uri.host}"
 
-      binding.pry
-
       websource = WebSource.find_or_create_by!({ name: web_source[:name], url: web_source_base_url, scraper: web_source[:parser] })
 
       Rails.logger.info "\n*********\nScraping: #{websource.url}\n************\n"
 
-      web_source_scraper = Object.const_get(websource.scraper).new
-      errors = web_source_scraper.scrape(websource)
+      web_source_parser = Object.const_get(websource.scraper).new
+      errors = BaseScraper.new(web_source_parser).scrape(websource)
       display_scraped_results(web_source, errors)
     rescue StandardError => e
       Rails.logger.info "\n*********\nCould not find an existing Web Source or create a new Web Source\n*********\n"

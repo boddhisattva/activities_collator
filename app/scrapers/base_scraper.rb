@@ -4,23 +4,26 @@ require 'nokogiri'
 require 'open-uri'
 
 class BaseScraper
-  def initialize
+  def initialize(parser)
     @errors = []
+    @parser = parser
   end
 
   def scrape(web_source)
-    unless self.class.const_defined?(:EVENT_URL)
+    unless parser.class.const_defined?(:EVENT_URL) # CB if this has to be moved to the base parser class
       raise NotImplementedError, 'An event URL needs to be present in a subclass'
     end
 
-    webpage_document = parse_html_document(self.class::EVENT_URL)
+    webpage_document = parse_html_document(parser.class::EVENT_URL)
 
-    events(webpage_document).each do |event|
+    parser.parse_events(web_source.url, webpage_document).each do |event|
       create_event(web_source, event)
     end
 
     errors
   end
+
+  attr_reader :parser
 
   private
 
@@ -31,18 +34,18 @@ class BaseScraper
   end
 
   def create_event(web_source, event)
-    start_date, end_date = extract_dates(event)
+    # start_date, end_date = extract_dates(event)
 
     web_source.events.create!(
-      title: title(event),
-      start: start_date,
-      finish: end_date,
-      description: description(event),
-      url: url(web_source.url, event)
+      title: event[:title],
+      start: event[:start],
+      finish: event[:finish],
+      description: event[:description],
+      url: event[:url]
     )
   rescue StandardError => e
     errors << {
-      websource: self.class::EVENT_URL,
+      websource: parser.class::EVENT_URL,
       message: "Error in creating event. Details - #{e.message}"
     }
   end
