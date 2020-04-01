@@ -26,8 +26,8 @@ class BaseScraper
 
   attr_reader :errors
 
-  def events
-    raise NotImplementedError, 'This needs to be implemented in a subclass of BaseScraper'
+  def events(_webpage_document)
+    raise NotImplementedError, 'The events method needs to be implemented in a subclass of BaseScraper'
   end
 
   def create_event(web_source, event)
@@ -47,8 +47,8 @@ class BaseScraper
     }
   end
 
-  def extract_dates
-    raise NotImplementedError, 'This needs to be implemented in a subclass of BaseScraper'
+  def extract_dates(_event)
+    raise NotImplementedError, 'The extract_dates method needs to be implemented in a subclass of BaseScraper'
   end
 
   def parse_html_document(url)
@@ -56,14 +56,14 @@ class BaseScraper
   end
 
   def title(_event)
-    raise NotImplementedError, 'This needs to be implemented in a subclass of BaseScraper'
+    raise NotImplementedError, 'The title method needs to be implemented in a subclass of BaseScraper'
   end
 
   def description(_event)
-    raise NotImplementedError, 'This needs to be implemented in a subclass of BaseScraper'
+    raise NotImplementedError, 'The description method needs to be implemented in a subclass of BaseScraper'
   end
 
-  def url(_event)
-    raise NotImplementedError, 'This needs to be implemented in a subclass of BaseScraper'
+  def url(_base_url, _event)
+    raise NotImplementedError, 'The url method needs to be implemented in a subclass of BaseScraper'
   end
 end
