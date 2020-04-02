@@ -1,0 +1,36 @@
+# frozen_string_literal: true
+
+class BerghainScraper < BaseScraper
+  EVENT_URL = 'http://berghain.de/events/'
+
+  private
+
+  def parse_events(webpage_document)
+    webpage_document.css('.upcoming-event')
+  end
+
+  def parse_dates(event)
+    if dates_exist?(event)
+      start_date = event.css('p').first.text.to_date
+      end_date = event.css('p').first.text.to_date
+    end
+
+    [start_date, end_date]
+  end
+
+  def dates_exist?(event)
+    event.css('p').first.text.present?
+  end
+
+  def parse_title(event)
+    event.css('h2').text.strip
+  end
+
+  def parse_description(event)
+    event.css('h3').text + '\n' + event.css('h4').text
+  end
+
+  def parse_url(base_url, event)
+    "#{base_url}#{event.attributes['href'].value}"
+  end
+end

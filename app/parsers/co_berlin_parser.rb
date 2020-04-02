@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CoBerlinParser # < BaseScraper
+class CoBerlinParser < BaseParser
   EVENT_URL = 'https://www.co-berlin.org/en/calender'
 
   # private
@@ -10,18 +10,6 @@ class CoBerlinParser # < BaseScraper
     events.each_with_object([]) do |event_element, page_events|
       page_events << parse_event_data(base_url, event_element)
     end
-  end
-
-  def parse_event_data(base_url, event_element) # this can go to a base class parser method
-    start_date, finish_date = parse_dates(event_element)
-
-    {
-      title: parse_title(event_element),
-      description: parse_description(event_element),
-      start: start_date,
-      finish: finish_date,
-      url: parse_url(base_url, event_element)
-    }
   end
 
   def parse_dates(event_element)
