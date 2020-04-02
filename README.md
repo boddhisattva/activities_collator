@@ -8,7 +8,9 @@ This is a program to collect & search events information for our website from ot
 
 ## Demo application
 
-This project has been prepared for ease of deployment and one can see a working version of the project on: https://activities-collator.herokuapp.com/
+This project has been prepared for ease of deployment and one can see a working version of the project on: https://activities-collator.herokuapp.com/. A demo screenshot of the
+working app is available [here](#screenshot-of-working-application)
+
 
 Please note: With the help of the Heroku Scheduler add on, this project is configured to extract the latest events from the above
 web sources on a regular basis, this way new events will be made visible on https://activities-collator.herokuapp.com/
@@ -106,6 +108,10 @@ One should now be able to see all the events on the home page and search through
       Total number of errors: 18
       *********
     ```
+
+#### Screenshot of working application
+
+![Activities Collator](http://i.imgur.com/MWxGIpk.png "Activities Collator")
 
 
 
