@@ -41,6 +41,6 @@ class Scraper
   end
 
   def get_page_data(url)
-    Nokogiri::HTML(open(url))
+    Nokogiri::HTML(URI.open(url))
   end
 end
