@@ -37,7 +37,7 @@ RSpec.feature 'Events search', type: :feature do
         expect(page).not_to have_text('Later event')
       end
 
-      scenario 'event start date is greater event finish date' do
+      scenario 'event start date is greater than event finish date' do
         event_in_near_future = create :event, title: 'Near future event', start: 2.weeks.from_now, finish: 3.weeks.from_now
 
         visit root_path
