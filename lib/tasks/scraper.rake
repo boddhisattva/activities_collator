@@ -12,7 +12,7 @@ namespace :scraper do
       Rails.logger.info "\n*********\nScraping: #{websource.url}\n************\n"
 
       web_source_parser = Object.const_get(websource.scraper).new
-      errors = BaseScraper.new(web_source_parser).scrape(websource)
+      errors = BaseScraper.new(web_source_parser).scrape(websource, web_source[:events_url])
       display_scraped_results(web_source, errors)
     rescue StandardError => e
       Rails.logger.info "\n*********\nCould not find an existing Web Source or create a new Web Source\n*********\n"

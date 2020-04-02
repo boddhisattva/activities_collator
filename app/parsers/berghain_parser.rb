@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class BerghainParser < BaseParser
-  EVENT_URL = 'http://berghain.de/events/'
-
   private
 
   def parse_events(webpage_document)

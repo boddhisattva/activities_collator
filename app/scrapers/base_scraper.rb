@@ -9,15 +9,11 @@ class BaseScraper
     @parser = parser
   end
 
-  def scrape(web_source)
-    unless parser.class.const_defined?(:EVENT_URL) # CB if this has to be moved to the base parser class
-      raise NotImplementedError, 'An event URL needs to be present in a subclass'
-    end
-
-    webpage_document = parse_html_document(parser.class::EVENT_URL)
+  def scrape(web_source, url_to_scrape)
+    webpage_document = get_page_data(url_to_scrape)
 
     parser.extract_all_events_info(web_source.url, webpage_document).each do |event|
-      create_event(web_source, event)
+      create_event(web_source, event, url_to_scrape)
     end
 
     errors
@@ -29,13 +25,7 @@ class BaseScraper
 
   attr_reader :errors
 
-  def parse_events(_webpage_document)
-    raise NotImplementedError, 'The events method needs to be implemented in a subclass of BaseScraper'
-  end
-
-  def create_event(web_source, event)
-    # start_date, end_date = extract_dates(event)
-
+  def create_event(web_source, event, url_to_scrape)
     web_source.events.create!(
       title: event[:title],
       start: event[:start],
@@ -45,28 +35,13 @@ class BaseScraper
     )
   rescue StandardError => e
     errors << {
-      websource: parser.class::EVENT_URL,
+      websource: url_to_scrape,
       message: "Error in creating event. Details - #{e.message}"
     }
   end
 
-  def parse_dates(_event)
-    raise NotImplementedError, 'The extract_dates method needs to be implemented in a subclass of BaseScraper'
-  end
 
-  def parse_html_document(url)
+  def get_page_data(url)
     Nokogiri::HTML(open(url))
-  end
-
-  def parse_title(_event)
-    raise NotImplementedError, 'The title method needs to be implemented in a subclass of BaseScraper'
-  end
-
-  def parse_description(_event)
-    raise NotImplementedError, 'The description method needs to be implemented in a subclass of BaseScraper'
-  end
-
-  def parse_url(_base_url, _event)
-    raise NotImplementedError, 'The url method needs to be implemented in a subclass of BaseScraper'
   end
 end

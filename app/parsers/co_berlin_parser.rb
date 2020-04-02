@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CoBerlinParser < BaseParser
-  EVENT_URL = 'https://www.co-berlin.org/en/calender'
-
   private
 
   def parse_events(webpage_document)
