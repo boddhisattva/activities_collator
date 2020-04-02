@@ -7,11 +7,11 @@ namespace :scraper do
       uri = URI.parse(web_source[:events_url])
       web_source_base_url = "#{uri.scheme}://#{uri.host}"
 
-      websource = WebSource.find_or_create_by!({ name: web_source[:name], url: web_source_base_url, scraper: web_source[:parser] })
+      websource = WebSource.find_or_create_by!({ name: web_source[:name], url: web_source_base_url})
 
       Rails.logger.info "\n*********\nScraping: #{websource.url}\n************\n"
 
-      web_source_parser = Object.const_get(websource.scraper).new
+      web_source_parser = Object.const_get(web_source[:parser]).new
       errors = Scraper.new(web_source_parser).scrape(websource, web_source[:events_url])
       display_scraped_results(web_source, errors)
     rescue => e
