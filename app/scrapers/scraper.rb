@@ -3,7 +3,7 @@
 require 'nokogiri'
 require 'open-uri'
 
-class BaseScraper
+class Scraper
   def initialize(parser)
     @errors = []
     @parser = parser

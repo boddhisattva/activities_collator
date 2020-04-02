@@ -2,13 +2,7 @@
 
 require 'rails_helper'
 
-describe BaseScraper do
-  class BrandNewScraper < BaseScraper; end
-
-  class ScraperWithoutParserMethods < BaseScraper
-    EVENT_URL = 'https://www.co-berlin.org/en/calender'
-  end
-
+describe Scraper do
   describe '#scrape' do
     let(:web_source) { create(:web_source) }
     let(:new_scraper) { BrandNewScraper.new }
