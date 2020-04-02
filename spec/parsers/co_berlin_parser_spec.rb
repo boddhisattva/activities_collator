@@ -12,12 +12,10 @@ describe CoBerlinParser do
           webpage_document = Nokogiri::HTML(CoBerlinHtmlHelper.events_with_start_and_finish_date_content)
           events = co_berlin_parser.extract_all_events_info('https://www.co-berlin.org/en/calender', webpage_document)
 
-          binding.pry
-
           expect(events.count).to eq 2
           first_event = events.first
           expect(first_event[:title]).to eq('Current exhibitions at C/O Berlin')
-          expect(first_event[:description]).to eq CoBerlinDataHelper.event_with_start_and_finish_date_description
+          expect(first_event[:description]).to eq CoBerlinDataHelper.first_event_with_start_and_finish_date_description
           expect(first_event[:start]).to eq(Date.parse('Sat, 07 Dec 2019'))
           expect(first_event[:finish]).to eq(Date.parse('Sat, 07 Jun 2020'))
           expect(first_event[:url]).to eq('https://www.co-berlin.org/en/calender/en/current-exhibition-co-berlin')
