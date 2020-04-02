@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe BerghainParser do
   describe '#extract_all_events_info' do
-    context 'Berghain page has events with relevant dates' do
+    context 'Berghain page has unique events with relevant dates' do
       it 'parses events information and returns an events collection' do
         webpage_document = Nokogiri::HTML(BerghainHtmlHelper.event_with_dates_content)
         berghain_parser = BerghainParser.new
