@@ -3,7 +3,7 @@
 module CoBerlinHtmlHelper
   module_function
 
-  def events_with_start_and_end_date_content
+  def events_with_start_and_finish_date_content
     <<-PAGE_CONTENT
       <div class="seite-c-single">
         <a href="/en/current-exhibition-co-berlin">
