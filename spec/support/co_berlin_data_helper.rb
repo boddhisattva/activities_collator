@@ -35,5 +35,16 @@ module CoBerlinDataHelper
        url: 'https://www.co-berlin.org/en/calender/en/exhibitions/linda-mccartney' }]
   end
 
-  def duplicate_events_info; end
+  def duplicate_events_info
+    [{ title: 'Current exhibitions at C/O Berlin',
+       description: first_event_with_start_and_finish_date_description,
+       start: Date.parse('Sat, 07 Dec 2019'),
+       finish: Date.parse('Sat, 07 Jun 2020'),
+       url: 'https://www.co-berlin.org/en/calender/en/current-exhibition-co-berlin' },
+     { title: 'Current exhibitions at C/O Berlin',
+       description: first_event_with_start_and_finish_date_description,
+       start: Date.parse('Sat, 07 Dec 2019'),
+       finish: Date.parse('Sat, 07 Jun 2020'),
+       url: 'https://www.co-berlin.org/en/calender/en/current-exhibition-co-berlin' }]
+  end
 end

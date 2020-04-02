@@ -5,8 +5,8 @@ require 'open-uri'
 
 class Scraper
   def initialize(parser)
-    @errors = []
     @parser = parser
+    @errors = []
   end
 
   def scrape(web_source, url_to_scrape)
@@ -39,7 +39,6 @@ class Scraper
       message: "Error in creating event. Details - #{e.message}"
     }
   end
-
 
   def get_page_data(url)
     Nokogiri::HTML(open(url))

@@ -4,48 +4,49 @@ require 'rails_helper'
 
 describe Scraper do
   describe '#scrape' do
-    let(:web_source) { create(:web_source) }
-    let(:new_scraper) { BrandNewScraper.new }
+    let(:web_source) { create(:web_source, url: 'https://www.co-berlin.org') }
 
-    context 'event URL not defined in the subclass' do
-      it 'raises a NotImplementedError with an appropriate error message' do
-        expect { new_scraper.scrape(web_source) }.to raise_error(NotImplementedError, 'An event URL needs to be present in a subclass')
-      end
-    end
-
-    context 'page specific parser method(e.g., events) is not defined in the subclass' do
-      it 'raises a NotImplementedError with an appropriate error message' do
-        scraper_without_parser_methods = ScraperWithoutParserMethods.new
-
-        allow(scraper_without_parser_methods).to receive(:parse_html_document) do
-          Nokogiri::HTML(ScraperWithoutParserMethodsHtmlHelper.events_content)
+    context 'page contains unique event entries' do
+      it 'extracts events info and creates event entries in the database' do
+        parser = CoBerlinParser.new
+        scraper = Scraper.new(parser)
+        webpage_document = Nokogiri::HTML(CoBerlinHtmlHelper.events_with_start_and_finish_date_content)
+        allow(scraper).to receive(:get_page_data) { webpage_document }
+        allow(parser).to receive(:extract_all_events_info).with('https://www.co-berlin.org', webpage_document) do
+          CoBerlinDataHelper.events_info
         end
 
-        expect { scraper_without_parser_methods.scrape(web_source) }.to raise_error(NotImplementedError, 'The events method needs to be implemented in a subclass of BaseScraper')
+        expect { scraper.scrape(web_source, 'https://www.co-berlin.org/en/calender') }.to change(Event, :count).by(2)
       end
     end
 
     context 'page contains duplicate event entries' do
       it 'creates unique event entries in the database & discards duplicate ones' do
-        scraper = CoBerlinParser.new
-        allow(scraper).to receive(:parse_html_document) do
-          Nokogiri::HTML(CoBerlinHtmlHelper.duplicate_events)
+        parser = CoBerlinParser.new
+        scraper = Scraper.new(parser)
+        webpage_document = Nokogiri::HTML(CoBerlinHtmlHelper.duplicate_events)
+        allow(scraper).to receive(:get_page_data) { webpage_document }
+        allow(parser).to receive(:extract_all_events_info).with('https://www.co-berlin.org', webpage_document) do
+          CoBerlinDataHelper.duplicate_events_info
         end
 
-        expect { scraper.scrape(web_source) }.to change(Event, :count).by(1)
+        expect { scraper.scrape(web_source, 'https://www.co-berlin.org/en/calender') }.to change(Event, :count).by(1)
       end
 
       it 'captures errors when trying to create duplicate events' do
-        scraper = BerghainParser.new
-        allow(scraper).to receive(:parse_html_document) do
-          Nokogiri::HTML(BerghainHtmlHelper.duplicate_events)
+        parser = CoBerlinParser.new
+        scraper = Scraper.new(parser)
+        webpage_document = Nokogiri::HTML(CoBerlinHtmlHelper.duplicate_events)
+        allow(scraper).to receive(:get_page_data) { webpage_document }
+        allow(parser).to receive(:extract_all_events_info).with('https://www.co-berlin.org', webpage_document) do
+          CoBerlinDataHelper.duplicate_events_info
         end
 
-        errors = scraper.scrape(web_source)
+        errors = scraper.scrape(web_source, 'https://www.co-berlin.org/en/calender')
 
         expect(errors.count).to eq(1)
         expect(errors.first[:message]).to eq('Error in creating event. Details - Validation failed: Url has already been taken')
-        expect(errors.first[:websource]).to eq('http://berghain.de/events/')
+        expect(errors.first[:websource]).to eq('https://www.co-berlin.org/en/calender')
       end
     end
   end
