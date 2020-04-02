@@ -3,13 +3,10 @@
 class BerghainParser < BaseParser
   EVENT_URL = 'http://berghain.de/events/'
 
-  # private
+  private
 
-  def parse_events(base_url, webpage_document)
-    events = webpage_document.css('.upcoming-event')
-    events.each_with_object([]) do |event_element, page_events|
-      page_events << parse_event_data(base_url, event_element)
-    end
+  def parse_events(webpage_document)
+    webpage_document.css('.upcoming-event')
   end
 
   def parse_dates(event_element)

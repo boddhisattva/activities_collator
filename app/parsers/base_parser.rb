@@ -1,8 +1,14 @@
 class BaseParser
 
+  def extract_all_events_info(base_url, webpage_document)
+    parse_events(webpage_document).each_with_object([]) do |event_element, page_events_info|
+      page_events_info << parse_event_data(base_url, event_element)
+    end
+  end
+
   private
 
-    def parse_event_data(base_url, event_element) # this can go to a base class parser method
+    def parse_event_data(base_url, event_element)
       start_date, finish_date = parse_dates(event_element)
 
       {

@@ -16,7 +16,7 @@ class BaseScraper
 
     webpage_document = parse_html_document(parser.class::EVENT_URL)
 
-    parser.parse_events(web_source.url, webpage_document).each do |event|
+    parser.extract_all_events_info(web_source.url, webpage_document).each do |event|
       create_event(web_source, event)
     end
 
@@ -29,7 +29,7 @@ class BaseScraper
 
   attr_reader :errors
 
-  def events(_webpage_document)
+  def parse_events(_webpage_document)
     raise NotImplementedError, 'The events method needs to be implemented in a subclass of BaseScraper'
   end
 
@@ -50,7 +50,7 @@ class BaseScraper
     }
   end
 
-  def extract_dates(_event)
+  def parse_dates(_event)
     raise NotImplementedError, 'The extract_dates method needs to be implemented in a subclass of BaseScraper'
   end
 
@@ -58,15 +58,15 @@ class BaseScraper
     Nokogiri::HTML(open(url))
   end
 
-  def title(_event)
+  def parse_title(_event)
     raise NotImplementedError, 'The title method needs to be implemented in a subclass of BaseScraper'
   end
 
-  def description(_event)
+  def parse_description(_event)
     raise NotImplementedError, 'The description method needs to be implemented in a subclass of BaseScraper'
   end
 
-  def url(_base_url, _event)
+  def parse_url(_base_url, _event)
     raise NotImplementedError, 'The url method needs to be implemented in a subclass of BaseScraper'
   end
 end
