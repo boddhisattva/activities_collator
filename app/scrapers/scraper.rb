@@ -33,7 +33,7 @@ class Scraper
       description: event[:description],
       url: event[:url]
     )
-  rescue StandardError => e
+  rescue => e
     errors << {
       websource: url_to_scrape,
       message: "Error in creating event. Details - #{e.message}"
