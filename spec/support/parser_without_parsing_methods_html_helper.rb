@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ScraperWithoutParserMethodsHtmlHelper
+module ParserWithoutParsingMethodsHtmlHelper
   module_function
 
   def events_content
@@ -24,5 +24,4 @@ module ScraperWithoutParserMethodsHtmlHelper
     </div>
     PAGE_CONTENT
   end
-
 end
